@@ -1,0 +1,30 @@
+body{
+  margin: 0;
+  background-color: #E9EEF3;
+  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.overflowH{
+  overflow: hidden;
+}
+.marTB10{
+  margin: 10px 0;
+}
+
+/* markdown css 自定义 */
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  font-size: 15px;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+      padding: 14px;
+  }
+}
+.markdown-body a{
+  color: #5bc0de
+}
