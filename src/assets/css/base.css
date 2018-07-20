@@ -28,3 +28,6 @@ body{
 .markdown-body a{
   color: #5bc0de
 }
+.markdown-body p{
+  margin-bottom: 8px;
+}

@@ -44,7 +44,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@media (min-width: 992px){
 
+  #wrap {
+    padding: 0 5%;
+  }
+}
 body > .el-container {
   margin-bottom: 40px;
 }

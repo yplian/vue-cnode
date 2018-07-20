@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main></el-main>
-    <el-aside class="hidden-xs-only"  width="200px">
+    <el-aside class="hidden-sm-and-down"  width="200px">
       <v-aside-user :userInfo="userInfo"></v-aside-user>
       <v-aside-qr></v-aside-qr>
     </el-aside>

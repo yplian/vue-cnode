@@ -13,8 +13,16 @@
           class="marTB10"
           align="middle"
           type="flex" >
-            <img class="aside-info-img" :src="userInfo.avatar_url">
-            <router-link class="aside-info-title" to="/mine">{{userInfo.loginname}}</router-link>
+            <img
+              class="aside-info-img"
+              :src="userInfo.avatar_url"
+              :title="userInfo.loginname">
+            <router-link
+              class="aside-info-title"
+              to="/mine"
+              :title="userInfo.loginname">
+              {{userInfo.loginname}}
+            </router-link>
         </el-row>
       </div>
       <!-- 用户未登陆 -->
@@ -49,8 +57,16 @@
           class="marTB10"
           align="middle"
           type="flex" >
-            <img class="aside-info-img" :src="userInfo.avatar_url">
-            <router-link class="aside-info-title" :to="'/user/'+userInfo.loginname">{{userInfo.loginname}}</router-link>
+            <img
+              class="aside-info-img"
+              :src="userInfo.avatar_url"
+              :title="userInfo.loginname">
+            <router-link
+              class="aside-info-title"
+              :to="'/user/'+userInfo.loginname"
+              :title="userInfo.loginname">
+              {{userInfo.loginname}}
+            </router-link>
         </el-row>
     </div>
   </div>
@@ -109,11 +125,17 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin: 0 15px;
+  margin-right: 12px;
+  margin-left: 15px;
 }
 .aside-info-title{
   font-size: 16px;
   color: rgb(64, 189, 247);
   text-decoration: none;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 120px;
 }
 </style>

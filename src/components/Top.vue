@@ -12,7 +12,7 @@
     name:'Top',
     data(){
       return{
-        isShow: true
+        isShow: false
       }
     },
     mounted() {
@@ -54,8 +54,8 @@
     color: #fff;
     position: fixed;
     z-index: 2010;
-    bottom: 5%;
-    right: 5%;
+    bottom: 10%;
+    right: 10%;
     display: flex;
     justify-content: center;
     align-items:center;

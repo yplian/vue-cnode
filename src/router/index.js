@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '@/vuex'
+// import store from '@/vuex'
 
 import Topics from '@/views/Topics'
 import Login from '@/views/Login'
 import Article from '@/views/Article'
 import User from '@/views/User'
+import Messages from '@/views/Messages'
+import Create from '@/views/Create'
 
 
 Vue.use(Router)
@@ -41,6 +43,16 @@ const router =new Router({
       path: '/user/:loginname',
       name: 'User',
       component: User
+    },
+    {
+      path: '/messages',
+      name: 'Messages',
+      component: Messages
+    },
+    {
+      path: '/create',
+      name: 'Create',
+      component: Create
     }
   ]
 })

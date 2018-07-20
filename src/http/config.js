@@ -1,5 +1,5 @@
 export default {
-  method: 'post',
+  method: 'get',
   // 基础url前缀
   baseURL: 'https://cnodejs.org/api/v1',
   // 请求头信息

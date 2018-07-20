@@ -38,7 +38,11 @@
                 /
                 <span title="点击数">{{item.visit_count}}</span>
               </p>
-              <span class="topics-time">{{formatDate(item.create_at)}}</span>
+              <span
+                class="topics-time"
+                title="最近回复时间">
+                {{formatDate(item.last_reply_at)}}
+              </span>
             </div>
           </div>
       </li>
@@ -54,8 +58,9 @@
     </div>
   </el-main>
   <!-- aside -->
-  <el-aside class="hidden-xs-only"  width="200px">
+  <el-aside class="hidden-sm-and-down"  width="200px">
     <v-aside-user :isMe="true" :userInfo="userInfo"></v-aside-user>
+    <v-aside-create></v-aside-create>
     <v-aside-qr></v-aside-qr>
   </el-aside>
 </el-container>
@@ -65,6 +70,7 @@
 <script>
 import AsideUser from '@/components/AsideUser'
 import AsideQR from '@/components/AsideQR'
+import AsideCreate from '@/components/AsideCreate'
 import Tool from "@/utils"
 
 export default {
@@ -123,6 +129,7 @@ export default {
   components:{
     'v-aside-user':AsideUser,
     'v-aside-qr':AsideQR,
+    'v-aside-create':AsideCreate,
   },
 }
 </script>

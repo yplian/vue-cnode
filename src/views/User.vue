@@ -2,8 +2,8 @@
   <el-container>
     <el-main class="user">
       <el-row>
-        <el-col :span="8">头像:</el-col>
-        <el-col :span="16">
+        <el-col :span="12">头像:</el-col>
+        <el-col :span="12">
           <img
             class="user-avatar"
             :src="user.avatar_url"
@@ -11,20 +11,20 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="8">用户名:</el-col>
-        <el-col :span="16">{{user.loginname}}</el-col>
+        <el-col :span="12">用户名:</el-col>
+        <el-col :span="12">{{user.loginname}}</el-col>
       </el-row>
       <el-row>
-        <el-col :span="8">github用户名:</el-col>
-        <el-col :span="16">{{user.githubUsername}}</el-col>
+        <el-col :span="12">github用户名:</el-col>
+        <el-col :span="12">{{user.githubUsername}}</el-col>
       </el-row>
       <el-row>
-        <el-col :span="8">创建时间至今:</el-col>
-        <el-col :span="16">{{formatDate(user.create_at)}}</el-col>
+        <el-col :span="12">创建时间至今:</el-col>
+        <el-col :span="12">{{formatDate(user.create_at)}}</el-col>
       </el-row>
       <el-row>
-        <el-col :span="8">当前积分:</el-col>
-        <el-col :span="16">{{user.score}}</el-col>
+        <el-col :span="12">当前积分:</el-col>
+        <el-col :span="12">{{user.score}}</el-col>
       </el-row>
       <el-row class="bg-gray">
         <el-col :span="1"><i class='el-icon-edit'></i></el-col>
@@ -118,7 +118,6 @@ export default{
       .then(res => {return JSON.parse(res)})
       .then(res => {
         this.user = res.data;
-        console.log(this.user)
       })
     },
     formatDate(time){
@@ -136,8 +135,8 @@ export default{
   .user{
     background: #fff;
     .user-avatar{
-      width: 48px;
-      height: 48px;
+      width: 38px;
+      height: 38px;
     }
     .el-row{
       display: flex;
@@ -149,10 +148,14 @@ export default{
       .el-col:nth-child(1){
         text-align: right;
         padding-right: 10px;
-        font-weight: bold;
+        // font-weight: bold;
+      }
+      .el-col:nth-child(2){
+        color: #999;
       }
       &.user-list{
         padding: 0px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         .topics-list{
           overflow: hidden;
           margin: 0px;
@@ -163,7 +166,7 @@ export default{
             display: flex;
             align-items: center;
             border-bottom: 1px solid #ddd;
-            padding: 4px 10px;
+            padding: 6px 10px;
             background-color: #fff;
             transition: background-color 0.3s;
             &:hover{
@@ -173,8 +176,8 @@ export default{
               border-bottom: none;
             }
             .topics-avatar{
-              width: 30px;
-              height: 30px;
+              width: 32px;
+              height: 32px;
               border-radius: 50%;
             }
             .topics-list-content{

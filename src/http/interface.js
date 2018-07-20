@@ -21,6 +21,24 @@ const getArticle = (id,params) => {
   })
 }
 
+// post /reply/:reply_id/ups 为评论点赞
+const replyUps = (reply_id,params) => {
+  return axios({
+    url: '/reply/'+reply_id+'/ups',
+    method: 'post',
+    params
+  })
+}
+
+// post /topic/:topic_id/replies 新建评论
+const topicReply = (topic_id,params) => {
+  return axios({
+    url: '/topic/'+topic_id+'/replies',
+    method: 'post',
+    params
+  })
+}
+
 // 验证accesstoken
 const checkKey = params => {
   return axios({
@@ -38,10 +56,43 @@ const getUser = (loginname,params) => {
   })
 }
 
+// get /messages 获取已读和未读消息
+const getMsg = params => {
+  return axios({
+    url: '/messages',
+    method: 'get',
+    params
+  })
+}
+
+// post /message/mark_one/:msg_id 标记单个消息为已读
+const msgMarkOne = (msg_id,params) => {
+  return axios({
+    url: '/message/mark_one/'+msg_id,
+    method: 'post',
+    params
+  })
+}
+
+// post /topics 新建主题
+const createTopics = params => {
+  return axios({
+    // headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    url: '/topics',
+    method: 'post',
+    data:params
+  })
+}
+
 // 默认全部导出
 export default {
-  checkKey,
   getTopics,
   getArticle,
   getUser,
+  checkKey,
+  replyUps,
+  topicReply,
+  getMsg,
+  msgMarkOne,
+  createTopics,
 }

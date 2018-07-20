@@ -11,7 +11,7 @@ import api from './http'
 // import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/element-variables.scss'
 // 字体图标文字
-// import './assets/font/iconfont.css'
+import './assets/font/iconfont.css'
 // markdown css
 import 'github-markdown-css'
 // 自定义公共样式

@@ -1,7 +1,6 @@
 <template>
   <el-main class="login">
     <section class="content content-hashead">
-      <!-- <input class="login-key" type="text" v-model="accessKey" placeholder="请输入Access Token"> -->
       <el-row>
         <el-input v-model="accessKey" placeholder="请输入Access Token"></el-input>
       </el-row>
@@ -32,15 +31,15 @@ export default {
         this.$store.dispatch('setUserInfo', userKey);
         Tool.localItem('userKey',JSON.stringify(userKey));
         this.$message({
+          type: 'success',
           message: '恭喜你，登陆成功！',
-          type: 'success'
         });
         this.$router.push('/')
       })
       .catch(err => {
         this.$message({
+          type: 'error',
           message: `${err}`,
-          type: 'error'
         });
        })
     },
@@ -52,11 +51,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login{
+  margin-top: 50px;
+}
+
 .el-row{
   text-align: center;
   line-height: 70px;
   .el-input{
-    width: 85%;
+    width: 60%;
   }
 }
 

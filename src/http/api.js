@@ -6,7 +6,7 @@ export default function $axios (options) {
     const instance = axios.create({
       baseURL: config.baseURL,
       headers: {},
-      transformResponse: [function (data) {}]
+      transformResponse: [function (data) {return data;}]
     }
   )
   // request 拦截器
