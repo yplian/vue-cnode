@@ -43,7 +43,6 @@
 import AsideUser from '@/components/AsideUser'
 import AsideQR from '@/components/AsideQR'
 import markdownEditor from 'vue-simplemde/src/markdown-editor'
-import axios from 'axios'
 
 export default{
   name:'Create',
@@ -86,30 +85,13 @@ export default{
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log({
-            accesstoken:this.userInfo.accesstoken,
-            ...this.form
-          })
-          // axios.post('https://cnodejs.org/api/v1/topics', {
-          //   accesstoken:this.userInfo.accesstoken,
-          //   title: this.form.title,
-          //   tab: this.form.tab,
-          //   content: this.form.content,
-          // })
-          // .then(function (response) {
-          //   console.log(response);
-          // })
-          // .catch(function (error) {
-          //   console.log(error);
-          // });
           this.$api.createTopics({
             accesstoken:this.userInfo.accesstoken,
             ...this.form
           })
           .then(res => {return JSON.parse(res)})
           .then(res => {
-            this.$router.push(`/topics/${res.data.topic_id}`);
-            console.log(res.success,res.topic_id)
+            this.$router.push(`/topics/${res.topic_id}`);
           })
           .catch(err=>{
             console.log(err)
@@ -126,9 +108,6 @@ export default{
   }
 }
 </script>
-<style>
-@import 'simplemde-theme-base/dist/simplemde-theme-base.min.css';
-</style>
 
 <style lang="scss" scoped>
 .create{

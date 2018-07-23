@@ -14,6 +14,8 @@ import './assets/css/element-variables.scss'
 import './assets/font/iconfont.css'
 // markdown css
 import 'github-markdown-css'
+//  markdown edit css
+import 'simplemde-theme-base/dist/simplemde-theme-base.min.css'
 // 自定义公共样式
 import './assets/css/base.css'
 

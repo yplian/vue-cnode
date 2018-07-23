@@ -2,12 +2,19 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import store from '@/vuex'
 
-import Topics from '@/views/Topics'
-import Login from '@/views/Login'
-import Article from '@/views/Article'
-import User from '@/views/User'
-import Messages from '@/views/Messages'
-import Create from '@/views/Create'
+// import Topics from '@/views/Topics'
+// import Login from '@/views/Login'
+// import Article from '@/views/Article'
+// import User from '@/views/User'
+// import Messages from '@/views/Messages'
+// import Create from '@/views/Create'
+
+const Topics = () => import('@/views/Topics')
+const Login = () => import('@/views/Login')
+const Article = () => import('@/views/Article')
+const User = () => import('@/views/User')
+const Messages = () => import('@/views/Messages')
+const Create = () => import('@/views/Create')
 
 
 Vue.use(Router)

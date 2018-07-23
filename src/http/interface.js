@@ -26,7 +26,7 @@ const replyUps = (reply_id,params) => {
   return axios({
     url: '/reply/'+reply_id+'/ups',
     method: 'post',
-    params
+    data:params
   })
 }
 
@@ -35,7 +35,7 @@ const topicReply = (topic_id,params) => {
   return axios({
     url: '/topic/'+topic_id+'/replies',
     method: 'post',
-    params
+    data:params
   })
 }
 
@@ -44,7 +44,7 @@ const checkKey = params => {
   return axios({
     url: '/accesstoken',
     method: 'post',
-    params
+    data:params
   })
 }
 // get /user/:loginname 用户详情
@@ -70,7 +70,7 @@ const msgMarkOne = (msg_id,params) => {
   return axios({
     url: '/message/mark_one/'+msg_id,
     method: 'post',
-    params
+    data:params
   })
 }
 

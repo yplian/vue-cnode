@@ -31,3 +31,7 @@ body{
 .markdown-body p{
   margin-bottom: 8px;
 }
+/* markdown-editor */
+.markdown-editor .CodeMirror, .markdown-editor .CodeMirror-scroll {
+  min-height: 200px;
+}

@@ -29,8 +29,8 @@
                   class="reply-avatar"
                   :src="reply.author.avatar_url"
                   :alt="reply.author.loginname"
-                  :title="reply.author.loginname">
-
+                  :title="reply.author.loginname"
+                >
                 <router-link
                   id="reply.id"
                   class="reply-loginname"
@@ -38,6 +38,7 @@
                   {{reply.author.loginname}}
                 </router-link>
                 <span class="reply-floor">{{reply_index+1}}楼</span>
+                <span class="reply-floor">{{formatDate(reply.create_at)}}</span>
               </div>
               <div class="article-replies-headerR">
                 <span :class="[reply.ups.length==0 ? 'hide' : '']">
@@ -57,20 +58,44 @@
                     v-show="userInfo.success"
                     class="iconfont icon-brush"
                     title="评论"
+                    @click="showMarkdownEdit(reply)"
                     ></i>
                 </span>
               </div>
-
             </header>
             <article class="markdown-body article-content" v-html="reply.content"></article>
+            <section
+              class="article-markdown"
+              v-show="reply.showEdit">
+              <markdown-editor
+                v-model="reply.replyVal"
+                :sanitize="false"
+                :configs="configs"
+                preview-class="markdown-body"
+                :autoinit="true">
+              </markdown-editor>
+              <el-row type="flex" justify="end">
+                <el-button type="primary" @click="createReply(reply,true)">回复</el-button>
+                <el-button @click="reply.showEdit=!reply.showEdit">取消</el-button>
+              </el-row>
+            </section>
+
           </div>
         </section>
         <!-- end reply -->
         <!-- toreplies -->
-        <section>
-          <form action="">
-
-          </form>
+        <section class="article-markdown">
+          <markdown-editor
+            v-model="replyVal"
+            :sanitize="false"
+            :configs="configs"
+            preview-class="markdown-body"
+            :autoinit="true">
+          </markdown-editor>
+          <el-row type="flex" justify="center">
+            <el-button type="primary" @click="createReply">回复</el-button>
+            <el-button @click="replyVal=''">重置</el-button>
+          </el-row>
         </section>
       </el-main>
       <!-- end main -->
@@ -98,13 +123,19 @@
 import AsideUser from '@/components/AsideUser'
 import AsideQR from '@/components/AsideQR'
 import Tool from "@/utils"
+import markdownEditor from 'vue-simplemde/src/markdown-editor'
 
 export default{
   name:'Article',
   data(){
     return{
       data:{},
-      isSuccess:true
+      isSuccess:true,
+      configs: {
+        status: false, // 禁用底部状态栏
+        spellChecker: false // 禁用拼写检查
+      },
+      replyVal:'',
     }
   },
   created() {
@@ -118,6 +149,7 @@ export default{
   components:{
     'v-aside-user':AsideUser,
     'v-aside-qr':AsideQR,
+    markdownEditor,
   },
   computed:{
     userInfo(){
@@ -125,6 +157,7 @@ export default{
     }
   },
   methods:{
+    // 获取文章数据
     getArticle(id,obj){
       const loading = this.$loading({
           lock: true,
@@ -136,6 +169,11 @@ export default{
       .then(res => {return JSON.parse(res)})
       .then(res => {
         this.isSuccess = true;
+        // 设置评论框是否显隐的属性，默认隐藏
+        res.data.replies.map((el)=>{
+          el.showEdit = false;
+          el.replyVal = '';
+        })
         this.data = res.data;
         loading.close();
       })
@@ -144,15 +182,18 @@ export default{
         loading.close();
       })
     },
+    // 时间格式化
     formatDate(time){
       return Tool.formatDate(time)
     },
+    // 文章类型识别
     switchTabs(tab){
       return Tool.switchTabs(tab)
     },
+    // 点赞
     replyUps(reply_index){
       // 登陆用户信息
-      let loginUser = this.$store.state.userInfo;
+      let loginUser = this.userInfo;
       // 是否登陆成功
       let loginBool = loginUser.success;
       // 当前评论数据
@@ -200,12 +241,61 @@ export default{
         });
       }
     },
+    // 返回上一级
     goBack(){
       this.$router.back();
+    },
+    // 显隐当前对话框
+    showMarkdownEdit(info){
+      // 判断是否登陆
+      if(this.userInfo.success){
+        info.replyVal = `@${info.author.loginname} `;
+        info.showEdit =! info.showEdit;
+      }else{
+        this.$confirm('该操作需要用户登陆, 是否跳转登陆页?', '提示', {
+          confirmButtonText: '跳转',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/login')
+        }).catch((err) => {
+          this.$message({
+            type: 'warning',
+            message: `已取消跳转  ╮(╯﹏╰）╭`
+          });
+        });
+      }
+
+    },
+    // 新建评论
+    createReply(reply,flag=false){
+      let accesstoken = this.userInfo.accesstoken;
+      let topic_id = this.$route.params.id;
+      let content = flag ? reply.replyVal: this.replyVal;
+      console.log(content)
+      if(content==''){
+        this.$message('不能为空！');
+        return false
+      }
+
+      this.$api.topicReply(topic_id,{
+        accesstoken,
+        content: flag ? reply.replyVal: this.replyVal,
+        reply_id: flag ? reply.id : null,
+      })
+      .then(res => {return JSON.parse(res)})
+      .then(res => {
+        // console.log(res)
+        this.getArticle(this.$route.params.id,{accesstoken:this.userInfo.accesstoken})
+      })
+      .catch(err =>{
+        console.log(err)
+      })
     }
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 .article{
@@ -259,7 +349,6 @@ export default{
     }
   }
   .article-replies{
-
     .article-replies-item{
       padding: 5px;
       border-bottom: 1px solid #ebeef5;
@@ -283,7 +372,7 @@ export default{
           }
           .reply-floor{
             color: #999;
-            padding-left: 10px;
+            padding-left: 5px;
             font-size: 14px;
             line-height: 40px;
           }
@@ -321,8 +410,16 @@ export default{
         }
       }
     }
-
-
+  }
+  .article-markdown{
+    padding-top: 10px;
+    // background: #e8edf2;
+    .el-row{
+      margin: 5px 0;
+    }
+  }
+  .article-markdown-r{
+    background: #fff;
   }
 }
 </style>
