@@ -10,7 +10,7 @@
         {{navItme.name}}
       </li>
     </ul>
-    <ul class="topics-list">
+    <ul class="topics-list" v-loading="loading" element-loading-text="正在加载中...">
       <li
         class="topics-list-li"
         v-for="item in data"
@@ -87,7 +87,8 @@ export default {
       ],
       data:[],
       tab:'',
-      page:1
+      page:1,
+      loading: true
     }
   },
   created() {
@@ -104,10 +105,14 @@ export default {
       this.getTopics({tab:this.tab})
     },
     getTopics(obj){
+      this.loading = true
       this.$api.getTopics(obj)
       .then(res => {return JSON.parse(res)})
       .then(res => {
         this.data = res.data;
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
       })
     },
     formatDate(time){
@@ -171,6 +176,7 @@ export default {
     margin: 0px;
     list-style: none;
     padding: 0;
+    min-height: 400px;
     .topics-list-li{
       overflow: hidden;
       display: flex;
